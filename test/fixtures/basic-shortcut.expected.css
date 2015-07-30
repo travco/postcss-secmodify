@@ -1,0 +1,16 @@
+.something_else {
+  text-shadow: 4px !important;
+}
+
+@media (--md-viewport) {
+
+  .u-md-sizeFit {
+    text-shadow: 4px;
+    float: left !important;
+    width: auto !important;
+  }
+
+  .u-mg-sizeFitAlt {
+    float: right !important;
+  }
+}

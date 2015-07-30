@@ -1,0 +1,22 @@
+/**
+ * Size: breakpoint 2 (medium)
+ */
+
+@media (--tKelty-viewport) {
+
+  /**
+   * Make an element shrink wrap its content.
+   */
+
+  .u-tKelty-sizeFit,
+  .u-tKelty-sizeFitAlt {
+    display: block !important;
+    float: left !important;
+    width: auto !important;
+    -md-raswa: auto;
+  }
+
+  .u-tKelty-sizeFitAlt {
+    float: right !important;
+  }
+}
