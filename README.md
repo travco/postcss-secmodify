@@ -1,0 +1,90 @@
+# postcss-secmodify [![Build Status](https://travis-ci.org/travco/postcss-secmodify.svg?branch=master)](https://travis-ci.org/travco/postcss-secmodify)
+
+**A [PostCSS](https://github.com/postcss/postcss) plugin that allows you to target individual sections of your CSS and modify them.** 
+(So you can pretend it's not a hacky fix)
+
+Use this plugin to:
+- Target certain parts of your css so you don't have to worry about accidentally matching and replacing something you didn't want to touch
+- Make edits to personalize a CSS library that isn't yours, without needing to maintain your own clone (as much).
+- Make automatic hacky fixes and have some piece of mind that a file-wide RegEx wouldn't give you.
+
+[Installation](https://github.com/travco/postcss-secmodify#installation) | [Usage](https://github.com/travco/postcss-secmodify#usage) | [Getting it Working](https://github.com/travco/postcss-secmodify#getting-it-working-with-postcss) | [Quirks](https://github.com/travco/postcss-secmodify#quirks)
+--- | --- | --- | ---
+
+
+
+**`postcss-secmodify` is compatible with PostCSS v4.1+.**
+
+## ~~Installation~~
+Installation is on hold until this gets published (not enough tests).
+```
+npm install postcss-secmodify --save
+```
+
+## Usage
+
+The config object for this tool controls everything, secModify looks at the keys 'sel', 'def', 'atRule', 'media', 'selInMedia', 'defInMedia', 'atRuleInMedia', and 'rString':
+```js
+var secMConfig = {
+  // sel: [],
+  // def: [],
+  // atRule: [],
+  // media: [],
+  // selInMedia: [],
+  // defInMedia: [],
+  // atRuleInMedia: [],
+  rString: ''
+};
+```
+rString's value is a string that will be used when replacing (aka: the new stuff that gets put in) and is the only mandatory key and value. It can be an empty string of course, if you feel like removing stuff.
+
+Everything but 'rString' takes in a string or a RegEx object that will be used to match in it's particular section of the css
+- sel's value(s) match selectors for rules,
+- def's value(s) match definitions (e.g. color),
+- atRule's value(s) match parameters of at-rules (e.g. the `screen` in `@media screen`)
+- media's value(s) match parameters of only `@media` statements
+- selInMedia's value(s) match selectors for rules, but only inside `@media` statements
+
+*... I think you get the picture*
+
+All the these 'matcher' keys can be strings, RegEx objects, or arrays of strings and/or RegEx objects. They are also (as you might have guessed) completely optional, and can be completely excluded from the object.
+
+## Getting It Working with PostCSS
+
+There is a mandatory 'config object' that must be passed in. For example (as a node script):
+
+```js
+var fs = require('fs');
+var postcss = require('postcss');
+var secModify = require('postcss-secmodify');
+
+var inputCss = fs.readFileSync('input.css', 'utf8');
+
+var secMConfig = {
+  sel: '.foo',
+  def: [new RegExp(/-\d[abcd]-/g), new RegExp(/-\d+-/g)],
+  // atRule: [],
+  media: new RegExp(/-\w\w-/g),
+  selInMedia: ['stuff', 'things', 'otherStuff'],
+  // defInMedia: [],
+  // atRuleInMedia: [],
+  rString: 'something_else'
+};
+
+var outputCss = postcss()
+  .use(secModify(secMConfig))
+  .process(inputCss)
+  .css;
+
+console.log(outputCss);
+```
+Any part of the config object not declared (besides the rString key) will speed up execution because the things it applies to will not be looked at.
+
+Or instead of doing this directly, you can take advantage of [any of the myriad of other ways to consume PostCSS](https://github.com/postcss/postcss#usage), and follow the plugin instructions they provide.
+
+## Quirks
+As with any piece of code it's got a few quirks. Behaviors that are not intended, and not enforced, and may disappear (or be forcibly altered) with the next release, so it's useful to be aware of them.
+
+**Order of Processing** : It should evaluate top-to-bottom, and in the order of 'sel', 'def', 'atRule', 'media', 'selInMedia', 'defInMedia', 'atRuleInMedia'. So, more or less specificity-inclined.
+
+Developer's thoughts *"Don't get me wrong, this is probably quite niche, but whatever, here it is anyway."*
