@@ -1,0 +1,18 @@
+.oo_something_else {
+  text-shadow: 4px !important;
+}
+
+.sizeFit {
+  style: oblique;
+  size: 12px;
+  family: sans-serif;
+  width: 42px;
+}
+
+@media screen {
+  .00-sizeFit {
+    ~style: 4px;
+    ~align: left;
+    indent: auto;
+  }
+}

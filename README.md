@@ -16,7 +16,7 @@ Use this plugin to:
 
 **`postcss-secmodify` is compatible with PostCSS v4.1+.**
 
-## ~~Installation~~
+## Installation
 Installation is on hold until this gets published (not enough tests).
 ```
 npm install postcss-secmodify --save
@@ -39,14 +39,14 @@ var secMConfig = {
   rString: ''
 };
 ```
-rString's value is a string that will be used when replacing (aka: the new stuff that gets put in) and is the only mandatory key and value. It can be an empty string of course, if you feel like removing stuff.
+rString's value is a string or function that will be used when replacing (aka: the new stuff that gets put in) and is the only mandatory key and value. It can be an empty string of course, if you feel like removing stuff. It can also use the [`$` patterns](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/replace#Specifying_a_string_as_a_parameter) to manipulate what is inserted, or, by [inserting a function to use](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/replace#Specifying_a_function_as_a_parameter) you can do much more than simple replacing.
 
 Everything but 'rString' takes in what will be used to match in it's particular section of the css
-- sel's value(s) match selectors for rules (e.g. `.foo`),
-- dec's value(s) match declaration properties (e.g. `color`),
-- decVal's value(s) match declaration values (e.g. `blue`),
-- atRule's value(s) match parameters of all at-rules (e.g. the `screen` in `@media screen {`)
-- media's value(s) match parameters of only `@media` statements
+- sel's value(s) match selectors for rules (e.g. `.foo`) outside of `@media` blocks,
+- dec's value(s) match declaration properties (e.g. `color`) outside of `@media` blocks,
+- decVal's value(s) match declaration values (e.g. `blue`) outside of `@media` blocks,
+- atRule's value(s) match parameters of non-media at-rules (e.g. the `screen` in `@special screen {`) outside of `@media` blocks,
+- media's value(s) match parameters of only `@media` statements,
 - selInMedia's value(s) match selectors for rules, but only inside `@media` statements
 
 *... I think you get the picture*

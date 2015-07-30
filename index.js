@@ -11,8 +11,8 @@ module.exports = postcss.plugin('postcss-secmodify', function secModify(SMI) {
     if (!SMI.hasOwnProperty('rString')) {
       result.warn('\'rString\', the value that will be used during a replace is undefined, make sure you pass an object with the \'rString\' keyvalue into secModify');
       return;
-    } else if (typeof SMI.rString !== 'string') {
-      result.warn('\'rString\', the value that will be used during a replace is not a string, make sure you give \'rString\' a string when passing it in.');
+    } else if (typeof SMI.rString !== 'string' && typeof SMI.rString !== 'function') {
+      result.warn('\'rString\', the value that will be used during a replace is not a string or a function, make sure you give \'rString\' a string when passing it in.');
       return;
     }
 
@@ -68,7 +68,7 @@ module.exports = postcss.plugin('postcss-secmodify', function secModify(SMI) {
       var str = '';
       if (mediaOnly && hasMediaAncestor(node)) {
         str = node[key];
-      } else if (!mediaOnly) {
+      } else if (!mediaOnly && !hasMediaAncestor(node)) {
         str = node[key];
       }
       //Bailout for a bad node[key] or a non-target

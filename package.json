@@ -5,7 +5,7 @@
     "email": "hofnug@gmail.com"
   },
   "license": "MIT",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Sectional modification of css by RegEx or Strings.",
   "homepage": "https://github.com/travco/postcss-secmodify",
   "repository": {

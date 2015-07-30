@@ -70,4 +70,34 @@ test('Basic for shortcuts', function(t) {
   t.end();
 });
 
+test('Dollar-matching', function(t) {
+  var inputObject = {
+    atRule: 'racaswa',
+    selInMedia: [new RegExp(/\.\d\d/g), new RegExp(/#oo/g)],
+    atRuleInMedia: 'oo',
+    rString: '$&-mana'
+  };
+  compareFixtures(t, 'dollar-matching', inputObject);
+  t.end();
+});
+
+test('Declaration shortcuts, media-exclusivity', function(t) {
+  var inputObject = {
+    dec: ['style', 'size', 'family'],
+    decInMedia: new RegExp(/\~\w+/g),
+    rString: 'font-$&'
+  };
+  compareFixtures(t, 'declarations', inputObject);
+  t.end();
+});
+
+test('Function Input, media-exclusivity', function(t) {
+  var inputObject = {
+    decVal: new RegExp(/var\?/g),
+    rString: function universalAnswer() { return 42; }
+  };
+  compareFixtures(t, 'function', inputObject);
+  t.end();
+});
+
 require('./warnings');

@@ -1,0 +1,26 @@
+.oo_something_else {
+  text-shadow: 4px !important;
+}
+
+@define-placeholder racaswa-mana {
+  color: orange;
+}
+
+@media screen {
+  .00-mana-sizeFit,
+  .01-mana-sizeFit,
+  .9-sizeFit {
+    text-shadow: 4px;
+    float: left !i;
+    width: auto !i;
+  }
+
+  @specialAtRule oo-mana {
+    content: 'aaaah!';
+  }
+
+  #oo-mana-mainblock {
+    @extend oo-mana;
+    color: gray;
+  }
+}

@@ -1,0 +1,13 @@
+.sizeFit {
+  style: oblique;
+  size: var?px;
+  family: sans-serif;
+  width: var?px;
+}
+
+@media screen {
+  .00-sizeFit {
+    align: left;
+    indent: var?;
+  }
+}
