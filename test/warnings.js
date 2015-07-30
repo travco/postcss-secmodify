@@ -2,25 +2,43 @@
 
 var test = require('tape');
 var postcss = require('postcss');
-var simpleExtend = require('..');
+var secModify = require('..');
 
-function checkForWarnings(css, cb) {
-  postcss(simpleExtend).process(css).then(function(result) {
+function checkForWarnings(css, inputObject, cb) {
+  postcss(secModify(inputObject)).process(css).then(function(result) {
     cb(result.warnings(), result);
   }).catch(function(err) {
     console.log(err);
   });
 }
 
-test('registers location warning', function(t) {
+test('registers no rString warning', function(t) {
 
-  t.test('with non-root definition', function(st) {
-    var nonrootDefine = '.foo { @define-placeholder bar { background: pink; } }';
-    checkForWarnings(nonrootDefine, function(warnings, result) {
+  t.test('completely left out of input object', function(st) {
+    var simple = '.foo { color: blue; }';
+    var inputObject = { sel: '.foo' };
+    checkForWarnings(simple, inputObject, function(warnings, result) {
       st.equal(warnings.length, 1, 'registers a warning');
-      st.ok(/must occur at the root level/.test(warnings[0].text),
+      st.ok(/used during a replace is undefined, make sure you pass an object with the 'rString' keyvalue/.test(warnings[0].text),
         'registers the right warning');
-      st.equal(result.css, '.foo { }', 'bad definition is removed');
+      st.equal(result.css, simple, 'untampered css');
+      st.end();
+    });
+  });
+
+  t.end();
+});
+
+test('registers non-string rString warning', function(t) {
+
+  t.test('bad input', function(st) {
+    var simple = '.foo { color: blue; }';
+    var inputObject = { sel: '.foo', rString: new RegExp(/.bar/g) };
+    checkForWarnings(simple, inputObject, function(warnings, result) {
+      st.equal(warnings.length, 1, 'registers a warning');
+      st.ok(/value that will be used during a replace is not a string/.test(warnings[0].text),
+        'registers the right warning');
+      st.equal(result.css, simple, 'untampered css');
       st.end();
     });
   });

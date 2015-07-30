@@ -2,21 +2,19 @@
  * Size: breakpoint 2 (medium)
  */
 
-@media (--md-viewport) {
 
   /**
    * Make an element shrink wrap its content.
    */
 
-  .u-md-sizeFit,
-  .u-me-sizeFitAlt {
+  .u-sizeFit,
+  .u-sizeFitAlt {
     display: block !important;
     float: left !important;
     width: auto !important;
     -md-raswa: auto;
   }
 
-  .u-mg-sizeFitAlt {
+  .u-sizeFitAlt {
     float: right !important;
   }
-}

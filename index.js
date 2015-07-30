@@ -6,18 +6,6 @@ var postcss = require('postcss');
 module.exports = postcss.plugin('postcss-secmodify', function secModify(SMI) {
 
   return function(css, result) {
-    // Programmer's Reference:
-    // -----------------------
-    // var SMI = {
-    //   sel: [], //regex selector
-    //   def: [], //regex prop
-    //   atRule: [], //regex params
-    //   media: new RegExp(/-md-/g), //regex params
-    //   selInMedia: ['-md-', '-me-', '-mg-'],
-    //   defInMedia: [],
-    //   atRuleInMedia: [],
-    //   rString: '-mKelty-'
-    // };
 
     //Nothing to replace with? Bug out!
     if (!SMI.hasOwnProperty('rString')) {
@@ -29,7 +17,7 @@ module.exports = postcss.plugin('postcss-secmodify', function secModify(SMI) {
     }
 
     // /*DEBUG*/ appendout('./test/debugout.txt', '\n----------------------------------------');
-    ['sel', 'def', 'atRule', 'media', 'selInMedia', 'defInMedia', 'atRuleInMedia'].forEach(function(filter) {
+    ['sel', 'dec', 'decVal', 'atRule', 'media', 'selInMedia', 'decInMedia', 'decValInMedia', 'atRuleInMedia'].forEach(function(filter) {
       if (!SMI.hasOwnProperty(filter)) {
         return;
       } else if (typeof SMI[filter] === 'undefined') {
@@ -39,9 +27,13 @@ module.exports = postcss.plugin('postcss-secmodify', function secModify(SMI) {
         css.eachRule(function(targetNode) {
           secReplace(targetNode, filter, 'selector');
         });
-      }else if (filter.indexOf('def') !== -1) {
+      }else if (filter.indexOf('dec') !== -1) {
+        var key = 'prop';
+        if (filter.indexOf('Val') !== -1) {
+          key = 'value';
+        }
         css.eachDecl(function(targetNode) {
-          secReplace(targetNode, filter, 'prop');
+          secReplace(targetNode, filter, key);
         });
       }else if (filter.indexOf('atRule') !== -1) {
         css.eachAtRule(function(targetNode) {
@@ -58,7 +50,7 @@ module.exports = postcss.plugin('postcss-secmodify', function secModify(SMI) {
           if (str === '' || typeof str === 'undefined') {
             return;
           }
-          // /*DEBUG*/ appendout('./test/debugout.txt', '\n\nRunning with SMI[' + filter + '], which contains:\n' + SMI[filter] + '\nwith key: params, and str: ' + str);
+          // // /*DEBUG*/ appendout('./test/debugout.txt', '\n\nRunning with SMI[' + filter + '], which contains:\n' + SMI[filter] + '\nwith key: params, and str: ' + str);
           if (SMI[filter].constructor === Array) {
             SMI[filter].forEach(function(rExpression) {
               str = str.replace(rExpression, SMI.rString);

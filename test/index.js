@@ -34,19 +34,40 @@ function compareFixtures(t, name, SMI) {
 //   return postcss(secModify()).process(css).css;
 // }
 
-test('Crossed Fingers', function(t) {
-  var oneBigInputObject = {
-    // sel: [],
-    // def: [],
+test('Basic', function(t) {
+  var inputObject = {
+    sel: new RegExp(/.u-/g),
+    // dec: [],
+    // decVal: [],
     // atRule: [],
-    media: new RegExp(/-md-/g),
-    selInMedia: ['-md-', '-me-', '-mg-'],
-    // defInMedia: [],
+    // media: [],
+    // selInMedia: [],
+    // decInMedia: [],
+    // decValInMedia: [],
     // atRuleInMedia: [],
-    rString: '-mKelty-'
+    rString: '.u-md-'
   };
-  compareFixtures(t, 'basic', oneBigInputObject);
+  compareFixtures(t, 'basic', inputObject);
   t.end();
 });
 
-// require('./warnings');
+test('Basic in Media', function(t) {
+  var inputObject = {
+    media: new RegExp(/-md-/g),
+    selInMedia: ['-md-', '-me-', '-mg-'],
+    rString: '-tKelty-'
+  };
+  compareFixtures(t, 'basic-media', inputObject);
+  t.end();
+});
+
+test('Basic for shortcuts', function(t) {
+  var inputObject = {
+    decValInMedia: '!i',
+    rString: '!important'
+  };
+  compareFixtures(t, 'basic-shortcut', inputObject);
+  t.end();
+});
+
+require('./warnings');
