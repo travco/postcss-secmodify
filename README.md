@@ -17,7 +17,6 @@ Use this plugin to:
 **`postcss-secmodify` is compatible with PostCSS v4.1+.**
 
 ## Installation
-Installation is on hold until this gets published (not enough tests).
 ```
 npm install postcss-secmodify --save
 ```
@@ -90,6 +89,6 @@ Or instead of doing this directly, you can take advantage of [any of the myriad 
 ## Quirks
 As with any piece of code it's got a few quirks. Behaviors that are not intended, and not enforced, and may disappear (or be forcibly altered) with the next release, so it's useful to be aware of them.
 
-**Order of Processing** : It should evaluate top-to-bottom, and in the order of 'sel', 'dec', 'decVal', 'atRule', 'media', 'selInMedia', 'decInMedia', 'decValInMedia', atRuleInMedia'. So, more or less specificity-inclined.
+**Order of Processing** : It should evaluate top-to-bottom, and in the order of 'sel', 'dec', 'decVal', 'atRule', 'media', 'selInMedia', 'decInMedia', 'decValInMedia', 'atRuleInMedia'. So, more or less specificity-inclined.
 
 Developer's thoughts *"Don't get me wrong, this is probably quite niche, but whatever, here it is anyway."*
