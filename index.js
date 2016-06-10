@@ -32,15 +32,15 @@ module.exports = postcss.plugin('postcss-secmodify', function secModify(SMI) {
         if (filter.indexOf('Val') !== -1) {
           key = 'value';
         }
-        css.walkDecl(function(targetNode) {
+        css.walkDecls(function(targetNode) {
           secReplace(targetNode, filter, key);
         });
       }else if (filter.indexOf('atRule') !== -1) {
-        css.walkAtRule(function(targetNode) {
+        css.walkAtRules(function(targetNode) {
           secReplace(targetNode, filter, 'params');
         });
       }else if (filter === 'media') {
-        css.walkAtRule(function(targetNode) {
+        css.walkAtRules(function(targetNode) {
           if (targetNode.name !== 'media') {
             return;
           }
