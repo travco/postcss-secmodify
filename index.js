@@ -24,7 +24,7 @@ module.exports = postcss.plugin('postcss-secmodify', function secModify(SMI) {
         return;
       }
       if (filter.indexOf('sel') !== -1) {
-        css.eachRule(function(targetNode) {
+        css.walkRules(function(targetNode) {
           secReplace(targetNode, filter, 'selector');
         });
       }else if (filter.indexOf('dec') !== -1) {
@@ -32,15 +32,15 @@ module.exports = postcss.plugin('postcss-secmodify', function secModify(SMI) {
         if (filter.indexOf('Val') !== -1) {
           key = 'value';
         }
-        css.eachDecl(function(targetNode) {
+        css.walkDecl(function(targetNode) {
           secReplace(targetNode, filter, key);
         });
       }else if (filter.indexOf('atRule') !== -1) {
-        css.eachAtRule(function(targetNode) {
+        css.walkAtRule(function(targetNode) {
           secReplace(targetNode, filter, 'params');
         });
       }else if (filter === 'media') {
-        css.eachAtRule(function(targetNode) {
+        css.walkAtRule(function(targetNode) {
           if (targetNode.name !== 'media') {
             return;
           }
