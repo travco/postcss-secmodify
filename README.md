@@ -4,7 +4,7 @@
 (So you can pretend it's not a hacky fix)
 
 Use this plugin to:
-- Target certain parts of your css so you don't have to worry about accidentally matching and replacing something you didn't want to touch
+- Target certain parts of your CSS so you don't have to worry about accidentally matching and replacing something you didn't want to touch
 - Make edits to personalize a CSS library that isn't yours, without needing to maintain your own clone (as much).
 - Make a postcss polyfill, without the time required to code a plugin.
 - Make automatic hacky fixes and have some piece of mind that a file-wide RegEx wouldn't give you.
@@ -14,7 +14,7 @@ Use this plugin to:
 
 
 
-**`postcss-secmodify` is compatible with PostCSS v4.1+.**
+**`postcss-secmodify` is compatible with PostCSS v4.1 onward (including 5.0+).**
 
 ## Installation
 ```
@@ -40,7 +40,7 @@ var secMConfig = {
 ```
 rString's value is a string or function that will be used when replacing (aka: the new stuff that gets put in) and is the only mandatory key and value. It can be an empty string of course, if you feel like removing stuff. It can also use the [`$` patterns](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/replace#Specifying_a_string_as_a_parameter) to manipulate what is inserted, or, by [inserting a function to use](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/replace#Specifying_a_function_as_a_parameter) you can do much more than simple replacing.
 
-Everything but 'rString' takes in what will be used to match in it's particular section of the css
+Everything but 'rString' takes in what will be used to match in it's particular section of the CSS
 - sel's value(s) match selectors for rules (e.g. `.foo`) outside of `@media` blocks,
 - dec's value(s) match declaration properties (e.g. `color`) outside of `@media` blocks,
 - decVal's value(s) match declaration values (e.g. `blue`) outside of `@media` blocks,
